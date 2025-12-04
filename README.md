@@ -41,24 +41,29 @@ You can try the game online: [Your Deployed Link Here](#)
 
 ## 🗂 Project Structure
 
-- **/app # Next.js App Router files
-- **/components # React components (Cell, Disk, etc.)
-- **/hooks # Custom hooks (useMinesWeeper)
-- **/functions # Game logic (generateDisk, openNeighbors, planMines)
-- **/types # TypeScript types
-- **/public # Static assets and images
+- **/app** – Next.js App Router files  
+- **/components** – React components (Cell, Disk, etc.)  
+- **/hooks** – Custom hooks (useMinesWeeper)  
+- **/functions** – Game logic (generateDisk, openNeighbors, planMines)  
+- **/types** – TypeScript types  
+- **/public** – Static assets and images  
 
-## How to Play
-- **Click a cell to reveal it
-- **Right-click to place/remove a flag
-- **Double-click on a number to auto-open surrounding cells if flagged correctly
-- **Reveal all non-mine cells to win
-- **Clicking on a mine ends the game
+---
 
+## 📝 How to Play
+
+- **Click** a cell to reveal it  
+- **Right-click** to place/remove a flag  
+- **Double-click** on a number to auto-open surrounding cells if flagged correctly  
+- Reveal all non-mine cells to **win**  
+- Clicking on a mine **ends the game**  
+
+---
 
 ## 🚀 Future Improvements
-- **Mobile-friendly touch controls
-- **Customizable grid size and difficulty levels
-- **Persistent high scores using local storage
-- **Animations and effects for better UX
-- **Sound effects for clicks and flags
+
+- Mobile-friendly touch controls  
+- Customizable grid size and difficulty levels  
+- Persistent high scores using local storage  
+- Animations and effects for better UX  
+- Sound effects for clicks and flags  
