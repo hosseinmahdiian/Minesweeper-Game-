@@ -1,16 +1,31 @@
-"use client";
-import { useMinesWeeper } from "@/hooks/useMinesWeeper";
+import { CellType } from "@/types/types.type";
 import Cell from "./cell";
 
-const Disk = ({ r, c, m }: { r: number; c: number; m: number }) => {
-  const MinesWeeper = useMinesWeeper(r, c, m);
-  const { disk, lose, win, flags, time, click, end, start, restart, flag } =
-    MinesWeeper;
+interface MinesWeeperProps {
+  disk: CellType[][] | null | undefined;
+  lose: boolean;
+  win: boolean;
+  flags: number;
+  time: number;
+  click: (pos: [number, number]) => void;
+  end: () => void;
+  start: (pos: [number, number]) => void;
+  restart: () => void;
+  flag: (pos: [number, number]) => void;
+}
 
+interface DiskProps {
+  minesWeeper: MinesWeeperProps;
+  board: { r: number; c: number; m: number; label: string };
+}
+
+const Disk = ({ minesWeeper, board }: DiskProps) => {
+  const { click, start, flag } = minesWeeper;
+  let timer: any;
   return (
-    <div className=" grid gap-1 w-fit mx-auto">
-      {disk
-        ? disk?.map((rows, i) => (
+    <div className=" grid gap-1 w-fit mx-auto overflow-scroll ">
+      {!!minesWeeper?.disk
+        ? minesWeeper?.disk?.map((rows, i) => (
             <div className="flex gap-1" key={`${i}`}>
               {rows?.map((cell, j) => (
                 <Cell
@@ -19,21 +34,25 @@ const Disk = ({ r, c, m }: { r: number; c: number; m: number }) => {
                   onClick={() => click([i, j])}
                   onContextMenu={() => flag([i, j])}
                   onDoubleClick={() => flag([i, j])}
+                  onTouchStart={() => {
+                    timer = setTimeout(() => {
+                      flag([i, j]);
+                    }, 500);
+                  }}
+                  onTouchEnd={() => {
+                    clearTimeout(timer);
+                  }}
                 />
               ))}
             </div>
           ))
-        : Array.from({ length: r })?.map((_, i) => (
+        : Array.from({ length: board.r })?.map((_, i) => (
             <div className="flex gap-1" key={`${i}`}>
-              {Array.from({ length: c })?.map((_, j) => (
+              {Array.from({ length: board.c })?.map((_, j) => (
                 <Cell key={`${i}-${j}`} onClick={() => start([i, j])} />
               ))}
             </div>
           ))}
-
-      <button onClick={() => restart()}>restart</button>
-      <button onClick={() => end()}>end</button>
-      <h2>{time}</h2>
     </div>
   );
 };

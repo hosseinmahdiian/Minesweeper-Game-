@@ -4,3 +4,12 @@ export type CellType = {
   isFlagged: boolean;
   neighborMines?: number;
 };
+
+export type BoardType = {
+  label: string;
+  r: number;
+  c: number;
+  m: number;
+};
+
+

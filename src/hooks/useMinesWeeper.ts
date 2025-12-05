@@ -1,12 +1,18 @@
 "use client";
-import { generateDisk, openNeighbors, planMines } from "@/functions/functions";
+import { generateDisk, openNeighbors, playAudio } from "@/functions/functions";
 import { CellType } from "@/types/types.type";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export const useMinesWeeper = (rows: number, cols: number, m: number) => {
+
+export const useMinesWeeper = (
+  rows: number,
+  cols: number,
+  m: number,
+  mute?: Boolean
+) => {
   const [time, setTime] = useState<number>(0);
-  const [flags, setFlags] = useState<number>(m);
+  const [flags, setFlags] = useState<number>(0);
   const [win, setWin] = useState<Boolean>(false);
   const [lose, setLose] = useState<Boolean>(false);
   const [started, setStarted] = useState<Boolean>(false);
@@ -20,6 +26,7 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
     setStarted(true);
     setWin(false);
     setLose(false);
+    setFlags(m);
   };
 
   const end = () => {
@@ -27,6 +34,7 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
     setStarted(false);
     setLose(false);
     setWin(false);
+    setFlags(0);
     setTime(0);
   };
 
@@ -36,21 +44,26 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
     setLose(false);
     setWin(false);
     setDisk(null);
+    setFlags(0);
     setTime(0);
   };
 
   const flag = ([r, c]: [number, number]) => {
-    if (!lose && !win && flags > 0) {
+    if (!lose && !win) {
       setDisk((prevDisk) => {
         console.log("flag");
         if (!!prevDisk) {
           const copy = prevDisk.map((row) => row.map((cell) => ({ ...cell })));
           if (copy[r][c].isOpen) return copy;
-          copy[r][c].isFlagged
-            ? setFlags((flags) => flags++)
-            : setFlags((flags) => flags--);
 
-          copy[r][c].isFlagged = !copy[r][c].isFlagged;
+          if (!copy[r][c].isFlagged) {
+            flags > 0 && setFlags(flags - 1);
+            flags > 0 && (copy[r][c].isFlagged = true);
+            !mute && playAudio("audio/planFlag.mp3");
+          } else {
+            flags < m && setFlags(flags + 1);
+            flags < m && (copy[r][c].isFlagged = false);
+          }
           return copy;
         }
       });
@@ -75,7 +88,9 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
             copy.forEach((row) =>
               row.forEach((cell) => cell.isMine && (cell.isOpen = true))
             );
-            toast.error("you lose");
+
+            !mute && playAudio("audio/gameOver.mp3");
+            // toast.error("you lose");
             setLose(true);
             return copy;
           }
@@ -90,7 +105,11 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
             row.map((cell) => cell.isOpen && !cell.isMine && cellOpen++)
           );
           if (cellOpen == rows * cols - m) {
-            toast.success("you wine");
+            copy.forEach((row) =>
+              row.forEach((cell) => cell.isMine && (cell.isOpen = true))
+            );
+            !mute && playAudio("audio/winner.mp3");
+            // toast.success("you wine");
             setWin(true);
           }
 
@@ -113,7 +132,9 @@ export const useMinesWeeper = (rows: number, cols: number, m: number) => {
         row.map((cell) => cell.isOpen && !cell.isMine && cellOpen++)
       );
       if (cellOpen == rows * cols - m) {
-        toast.success("you wine");
+        !mute && playAudio("audio/winner.mp3");
+
+        // toast.success("you wine");
         setWin(true);
       }
     } else {

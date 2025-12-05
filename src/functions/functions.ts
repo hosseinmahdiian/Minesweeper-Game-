@@ -79,11 +79,16 @@ export const openNeighbors = (disk: CellType[][], r: number, c: number) => {
 
     if (disk[nr] && disk[nr][nc]) {
       const cell = disk[nr][nc];
-      if (!cell.isOpen && !cell.isMine ) {
+      if (!cell.isOpen && !cell.isMine && !cell.isFlagged) {
         cell.isOpen = true;
         if (cell.neighborMines == 0) openNeighbors(disk, nr, nc);
       }
     }
   }
   return count;
+};
+
+export const playAudio = (path: string) => {
+  const audio = new Audio(path);
+  audio.play();
 };
