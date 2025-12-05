@@ -28,15 +28,15 @@ const Dropdown: React.FC<Props> = ({ value, onChange }) => {
       <button
         onClick={() => setOpen((p) => !p)}
         className="w-full flex items-center justify-between
-          bg-white px-3 py-2 rounded shadow border
-          hover:bg-gray-100 transition border-gray-50  cursor-pointer"
+          bg-gray-500 px-3 py-2 rounded shadow border border-gray-500
+          hover:bg-gray-400 transition   cursor-pointer"
       >
         <span>{value.label}</span>
         <FaChevronDown className={`transition ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div className="absolute top-full  mt-1 w-full bg-white rounded-md shadow-xl border  border-gray-50 z-50 overflow-hidden">
+        <div className="absolute top-full  mt-1 w-full bg-white rounded-md shadow-xl border  border-gray-500 z-50 overflow-hidden">
           {boardOptions.map((item) => (
             <button
               key={item.label}
@@ -45,8 +45,8 @@ const Dropdown: React.FC<Props> = ({ value, onChange }) => {
                 setOpen(false);
               }}
               className={`
-                  w-full  border-b last:border-0 border-gray-500 px-3 py-2 text-center hover:bg-gray-100 transition
-                  ${item.label === value.label ? "bg-gray-300" : "bg-white"}
+                  w-full  border-b last:border-0 border-gray-500 px-3 py-2 text-center  transition hover:bg-gray-500
+                  ${item.label === value.label ? "bg-gray-600" : "bg-gray-400"}
                 `}
             >
               {item.label}

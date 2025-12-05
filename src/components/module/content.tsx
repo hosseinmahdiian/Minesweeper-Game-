@@ -10,7 +10,6 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ item }) => {
-  
   if (item?.isMine && item?.isPlosion && item?.isOpen)
     return (
       <Image
@@ -18,7 +17,7 @@ const Content: React.FC<ContentProps> = ({ item }) => {
         alt="explosion"
         width={22}
         height={22}
-        className="mx-auto "
+        className="pointer-events-none select-none touch-none mx-auto"
       />
     );
 
@@ -32,20 +31,36 @@ const Content: React.FC<ContentProps> = ({ item }) => {
           alt="Mine"
           width={16}
           height={16}
-          className="mx-auto"
+          className="pointer-events-none select-none touch-none mx-auto"
+          draggable={false}
         />
       </span>
     );
 
   if (item?.isFlagged)
-    return <Image src={flagImg} alt="Flag" width={16} height={16} />;
-
-  // if (item?.isMine)
-  //   return <Image src={mineImg} alt="Mine" width={16} height={16} />;
+    return (
+      <Image
+        src={flagImg}
+        alt="Flag"
+        width={16}
+        height={16}
+        draggable={false}
+        className="pointer-events-none select-none touch-none"
+      />
+    );
 
   if (item?.isOpen) {
     if (item.isMine)
-      return <Image src={mineImg} alt="Mine" width={16} height={16} />;
+      return (
+        <Image
+          src={mineImg}
+          alt="Mine"
+          width={16}
+          height={16}
+          draggable={false}
+          className="pointer-events-none select-none touch-none"
+        />
+      );
     if (item.neighborMines === 0) return "";
 
     return (

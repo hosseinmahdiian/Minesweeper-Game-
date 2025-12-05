@@ -23,36 +23,29 @@ const Disk = ({ minesWeeper, board }: DiskProps) => {
   const { click, start, flag } = minesWeeper;
   let timer: any;
   return (
-    <div className=" grid gap-1 w-fit mx-auto overflow-scroll ">
-      {!!minesWeeper?.disk
-        ? minesWeeper?.disk?.map((rows, i) => (
-            <div className="flex gap-1" key={`${i}`}>
-              {rows?.map((cell, j) => (
-                <Cell
-                  key={`${i}-${j}`}
-                  item={cell}
-                  onClick={() => click([i, j])}
-                  onContextMenu={() => flag([i, j])}
-                  onDoubleClick={() => flag([i, j])}
-                  onTouchStart={() => {
-                    timer = setTimeout(() => {
-                      flag([i, j]);
-                    }, 500);
-                  }}
-                  onTouchEnd={() => {
-                    clearTimeout(timer);
-                  }}
-                />
-              ))}
-            </div>
-          ))
-        : Array.from({ length: board.r })?.map((_, i) => (
-            <div className="flex gap-1" key={`${i}`}>
-              {Array.from({ length: board.c })?.map((_, j) => (
-                <Cell key={`${i}-${j}`} onClick={() => start([i, j])} />
-              ))}
-            </div>
-          ))}
+    <div className=" w-full h-fit  overflow-scroll  ">
+      <div className=" grid gap-1 w-fit h-fit  overflow-scroll px-5 mb-4 mx-auto ">
+        {!!minesWeeper?.disk
+          ? minesWeeper?.disk?.map((rows, i) => (
+              <div className="flex gap-1 m  " key={`${i}`}>
+                {rows?.map((cell, j) => (
+                  <Cell
+                    key={`${i}-${j}`}
+                    item={cell}
+                    clickFN={() => click([i, j])}
+                    flagFN={() => flag([i, j])}
+                  />
+                ))}
+              </div>
+            ))
+          : Array.from({ length: board.r })?.map((_, i) => (
+              <div className="flex gap-1" key={`${i}`}>
+                {Array.from({ length: board.c })?.map((_, j) => (
+                  <Cell key={`${i}-${j}`} clickFN={() => start([i, j])} />
+                ))}
+              </div>
+            ))}
+      </div>
     </div>
   );
 };

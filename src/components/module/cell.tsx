@@ -1,54 +1,64 @@
+"use client";
 import { CellType } from "@/types/types.type";
 import Content from "./content";
+import { useRef } from "react";
 
 interface CellProps {
   item?: CellType;
-  onClick?: () => void;
-  onDoubleClick?: () => void;
-  onContextMenu?: () => void;
-  onTouchStart?: () => void;
-  onTouchEnd?: () => void;
+  clickFN: () => void;
+  flagFN?: () => void;
 }
 
-const Cell: React.FC<CellProps> = ({
-  item,
-  onClick,
-  onDoubleClick,
-  onContextMenu,
-  onTouchStart,
-  onTouchEnd,
-}) => {
-  // const getContent =
+const Cell: React.FC<CellProps> = ({ item, clickFN, flagFN }) => {
+  const pressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPress = useRef(false);
+
+  const flagHandler = () => {
+    flagFN && flagFN();
+  };
+  const clearHandler = () => {
+    if (pressTimer.current) {
+      clearTimeout(pressTimer.current);
+    }
+  };
 
   return (
     <div
       className={`w-10 h-10 flex items-center justify-center text-sm font-bold cursor-pointer select-none
-        border border-gray-400 rounded
+        border border-gray-700 rounded shadow-lg
         ${
           item?.isOpen
-            ? "bg-gray-200 shadow-inner"
-            : "bg-gray-400 hover:bg-gray-300"
+            ? "bg-[#9d9d9d] shadow-inner"
+            : "bg-[#343a40] hover:bg-[#495057]"
         }
       `}
       onClick={(e) => {
         e.preventDefault();
-        onClick && onClick();
-      }}
-      onDoubleClick={(e) => {
-        e.preventDefault();
-        onDoubleClick && onDoubleClick();
+        if (!isLongPress.current) {
+          clickFN();
+        }
+        isLongPress.current = false;
       }}
       onContextMenu={(e) => {
         e.preventDefault();
-        onContextMenu && onContextMenu();
+        flagHandler();
       }}
-      onTouchStart={(e) => {
-        e.preventDefault();
-        onTouchStart && onTouchStart();
+      onPointerDown={(e) => {
+        isLongPress.current = false;
+        pressTimer.current = setTimeout(() => {
+          isLongPress.current = true;
+          flagHandler();
+
+          if (navigator.vibrate) {
+            navigator.vibrate(40);
+          }
+        }, 500);
       }}
-      onTouchEnd={(e) => {
-        e.preventDefault();
-        onTouchEnd && onTouchEnd();
+      onPointerUp={() => {
+        clearHandler();
+      }}
+      onPointerMove={() => {
+        clearHandler();
       }}
     >
       <Content item={item ?? null} />

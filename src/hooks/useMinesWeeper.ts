@@ -21,6 +21,7 @@ export const useMinesWeeper = (
   );
 
   const start = ([r, c]: [number, number]) => {
+    playAudio("audio/click.mp3");
     setCellStarted([r, c]);
     setStarted(true);
     setWin(false);
@@ -56,12 +57,16 @@ export const useMinesWeeper = (
           if (copy[r][c].isOpen) return copy;
 
           if (!copy[r][c].isFlagged) {
-            flags > 0 && setFlags(flags - 1);
-            flags > 0 && (copy[r][c].isFlagged = true);
-            flags > 0 && !mute && playAudio("audio/planFlag.mp3");
+            if (flags > 0) {
+              setFlags(flags - 1);
+              copy[r][c].isFlagged = true;
+              !mute && playAudio("audio/planFlag.mp3");
+            }
           } else {
-            flags < m && setFlags(flags + 1);
-            flags < m && (copy[r][c].isFlagged = false);
+            if (flags < m) {
+              setFlags(flags + 1);
+              copy[r][c].isFlagged = false;
+            }
           }
           return copy;
         }
@@ -90,7 +95,7 @@ export const useMinesWeeper = (
             );
 
             !mute && playAudio("audio/gameOver.mp3");
-            // toast.error("you lose");
+            toast?.error("you lose");
             setLose(true);
             return copy;
           }
@@ -109,10 +114,10 @@ export const useMinesWeeper = (
               row.forEach((cell) => cell.isMine && (cell.isOpen = true))
             );
             !mute && playAudio("audio/winner.mp3");
-            // toast.success("you wine");
+            toast.success("you wine");
             setWin(true);
           }
-
+          playAudio("audio/click.mp3");
           return copy;
         }
       });
@@ -131,10 +136,10 @@ export const useMinesWeeper = (
       copy.map((row) =>
         row.map((cell) => cell.isOpen && !cell.isMine && cellOpen++)
       );
+
       if (cellOpen == rows * cols - m) {
         !mute && playAudio("audio/winner.mp3");
-
-        // toast.success("you wine");
+        toast.success("you wine");
         setWin(true);
       }
     } else {
