@@ -10,6 +10,9 @@
 A modern **Minesweeper** game built with **Next.js 16**, **React**, **Tailwind CSS 4** , and **TypeScript**.  
 This project replicates the classic Minesweeper game with added features like timers, flags, and a responsive UI.
 
+https://github.com/user-attachments/assets/1ef8e9f3-fba6-4c35-84c9-102c829514ee
+
+
 ---
 
 ## 🌐 Live Demo
