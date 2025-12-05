@@ -2,6 +2,7 @@ import { CellType } from "@/types/types.type";
 import Image from "next/image";
 import flagImg from "../../../public/flag.png";
 import mineImg from "../../../public/mine.png";
+import explosion from "../../../public/explosion.png";
 import { NumberColors } from "@/enum/enums";
 
 interface ContentProps {
@@ -9,6 +10,18 @@ interface ContentProps {
 }
 
 const Content: React.FC<ContentProps> = ({ item }) => {
+  
+  if (item?.isMine && item?.isPlosion && item?.isOpen)
+    return (
+      <Image
+        src={explosion}
+        alt="explosion"
+        width={22}
+        height={22}
+        className="mx-auto "
+      />
+    );
+
   if (item?.isMine && item?.isFlagged && item?.isOpen)
     return (
       <span className=" relative w-full">

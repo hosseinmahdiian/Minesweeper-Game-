@@ -4,7 +4,6 @@ import { CellType } from "@/types/types.type";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-
 export const useMinesWeeper = (
   rows: number,
   cols: number,
@@ -59,7 +58,7 @@ export const useMinesWeeper = (
           if (!copy[r][c].isFlagged) {
             flags > 0 && setFlags(flags - 1);
             flags > 0 && (copy[r][c].isFlagged = true);
-            !mute && playAudio("audio/planFlag.mp3");
+            flags > 0 && !mute && playAudio("audio/planFlag.mp3");
           } else {
             flags < m && setFlags(flags + 1);
             flags < m && (copy[r][c].isFlagged = false);
@@ -84,6 +83,7 @@ export const useMinesWeeper = (
           if (copy[r][c].isMine) {
             console.log("lose the game");
             copy[r][c].isOpen = true;
+            copy[r][c].isPlosion = true;
 
             copy.forEach((row) =>
               row.forEach((cell) => cell.isMine && (cell.isOpen = true))

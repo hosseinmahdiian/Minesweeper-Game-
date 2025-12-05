@@ -3,8 +3,8 @@ import Cell from "./cell";
 
 interface MinesWeeperProps {
   disk: CellType[][] | null | undefined;
-  lose: boolean;
-  win: boolean;
+  lose: Boolean;
+  win: Boolean;
   flags: number;
   time: number;
   click: (pos: [number, number]) => void;

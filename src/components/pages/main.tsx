@@ -23,7 +23,6 @@ const Main = () => {
   return (
     <div className="bg-gray-100 min-h-screen pt-6 flex flex-col items-center gap-4">
       <div className="flex flex-wrap w-full items-center justify-around gap-3 bg-blue-200 mx-2 py-3 container md:mx-auto px-10 rounded-2xl ">
-        
         <Dropdown value={board} onChange={setBoard} />
 
         <div className="flex gap-2 ">
@@ -43,15 +42,15 @@ const Main = () => {
         </div>
 
         <div className="flex gap-4 text-sm font-bold">
-          <span className="flex gap-2 ">
+          <span
+            className="flex gap-2 cursor-pointer"
+            onClick={() => muteHandler()}
+          >
             Volume :
             {mute ? (
-              <IoVolumeMute onClick={() => muteHandler()} className="text-lg" />
+              <IoVolumeMute className="text-lg" />
             ) : (
-              <IoVolumeMedium
-                onClick={() => muteHandler()}
-                className="text-lg"
-              />
+              <IoVolumeMedium className="text-lg" />
             )}
           </span>
           <span> Timer : {time ?? 0}</span>

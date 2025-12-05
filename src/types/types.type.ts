@@ -1,7 +1,8 @@
 export type CellType = {
   isOpen: Boolean;
   isMine: Boolean;
-  isFlagged: boolean;
+  isFlagged: Boolean;
+  isPlosion?: Boolean;
   neighborMines?: number;
 };
 
@@ -11,5 +12,3 @@ export type BoardType = {
   c: number;
   m: number;
 };
-
-

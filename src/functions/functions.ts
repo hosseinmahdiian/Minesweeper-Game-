@@ -12,6 +12,7 @@ export const generateDisk = (
       isOpen: false,
       isMine: false,
       isFlagged: false,
+      isPlosion: false,
       neighborMines: 0,
     }))
   );
