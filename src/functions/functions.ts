@@ -91,5 +91,6 @@ export const openNeighbors = (disk: CellType[][], r: number, c: number) => {
 
 export const playAudio = (path: string) => {
   const audio = new Audio(path);
+  audio.volume = 0.1;
   audio.play();
 };

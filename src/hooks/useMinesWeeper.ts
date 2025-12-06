@@ -21,7 +21,7 @@ export const useMinesWeeper = (
   );
 
   const start = ([r, c]: [number, number]) => {
-    playAudio("audio/click.mp3");
+    !mute && playAudio("audio/click.mp3");
     setCellStarted([r, c]);
     setStarted(true);
     setWin(false);
@@ -117,7 +117,7 @@ export const useMinesWeeper = (
             toast.success("you wine");
             setWin(true);
           }
-          playAudio("audio/click.mp3");
+          !mute && playAudio("audio/click.mp3");
           return copy;
         }
       });

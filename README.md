@@ -82,7 +82,11 @@ To clone the repository and run the project locally, use the following commands:
 
 ```bash
 # Clone the repository
+<<<<<<< HEAD
 git clone https://github.com/hosseinmahdiian/Minesweeper-Game-.git
+=======
+git clone https://github.com/hosseinmahdiian/Minesweeper-Game.git
+>>>>>>> 8f485f0 (add mobile disk)
 
 # Navigate into the project folder
 cd Minesweeper-Game
