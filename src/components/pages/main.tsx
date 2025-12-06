@@ -27,7 +27,7 @@ const Main = () => {
 
   return (
     <div className=" bg-[#343434]  pt-6 flex flex-col items-center  md:h-[calc(100%-144px)] h-[calc(100%-80px)]  ">
-      <div className="flex flex-wrap  items-center justify-around gap-3 bg-[#495057] mx-2 md:h-18 h-fit py-2 w-[calc(100%-20px)] container md:mx-auto px-10 rounded-2xl mb-4 ">
+      <div className="flex flex-wrap  items-center justify-between child:w-60 child:mx-auto gap-y-3 bg-[#495057] mx-2 md:h-18 h-fit py-2 w-[calc(100%-20px)] container md:mx-auto px-10 rounded-2xl mb-4 ">
         <Dropdown value={board} onChange={setBoard} />
 
         {/* <div className="flex gap-2 "> */}
