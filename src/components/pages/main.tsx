@@ -47,7 +47,7 @@ const Main = () => {
           </button> */}
         {/* </div> */}
 
-        <div className="flex gap-4 text-sm font-bold">
+        <div className="flex gap-4 text-sm font-bold !w-fit  " >
           <span
             className="flex gap-2 cursor-pointer"
             onClick={() => muteHandler()}
@@ -70,7 +70,7 @@ const Main = () => {
               width={16}
               height={16}
               draggable={false}
-              className="pointer-events-none select-none touch-none"
+              className="pointer-events-none select-none touch-none object-contain"
             />
             : {flags}
           </span>
